@@ -29,102 +29,6 @@ class BoardTest {
     }
 
     @Test
-    void createPawns() throws FileNotFoundException {
-        for (int x = 0; x < WIDTH; x++) {
-            for (int y = 0; y < HEIGHT; y++) {
-                if (y == 1) {
-                    assertEquals(new Pawn(PieceColor.BLACK, x, y), Board.board[x][y].getPiece());
-                } else if (y == 6) {
-                    assertEquals(new Pawn(PieceColor.WHITE, x, y), Board.board[x][y].getPiece());
-                } else {
-                    assertNotEquals(new Pawn(PieceColor.BLACK, x, y), Board.board[x][y].getPiece());
-                    assertNotEquals(new Pawn(PieceColor.WHITE, x, y), Board.board[x][y].getPiece());
-                }
-            }
-        }
-    }
-
-    @Test
-    void createRooks() throws FileNotFoundException {
-        for (int x = 0; x < WIDTH; x++) {
-            for (int y = 0; y < HEIGHT; y++) {
-                if ((x == 0 && y == 0) || (x == 7 && y == 0)) {
-                    assertEquals(new Rook(PieceColor.BLACK, x, y), Board.board[x][y].getPiece());
-                } else if ((x == 0 && y == 7) || (x == 7 && y == 7)) {
-                    assertEquals(new Rook(PieceColor.WHITE, x, y), Board.board[x][y].getPiece());
-                } else {
-                    assertNotEquals(new Rook(PieceColor.BLACK, x, y), Board.board[x][y].getPiece());
-                    assertNotEquals(new Rook(PieceColor.WHITE, x, y), Board.board[x][y].getPiece());
-                }
-            }
-        }
-    }
-
-    @Test
-    void createHorses() throws FileNotFoundException {
-        for (int x = 0; x < WIDTH; x++) {
-            for (int y = 0; y < HEIGHT; y++) {
-                if ((x == 1 && y == 0) || (x == 6 && y == 0)) {
-                    assertEquals(new Horse(PieceColor.BLACK, x, y), Board.board[x][y].getPiece());
-                } else if ((x == 1 && y == 7) || (x == 6 && y == 7)) {
-                    assertEquals(new Horse(PieceColor.WHITE, x, y), Board.board[x][y].getPiece());
-                } else {
-                    assertNotEquals(new Horse(PieceColor.BLACK, x, y), Board.board[x][y].getPiece());
-                    assertNotEquals(new Horse(PieceColor.WHITE, x, y), Board.board[x][y].getPiece());
-                }
-            }
-        }
-    }
-
-    @Test
-    void createBishops() throws FileNotFoundException {
-        for (int x = 0; x < WIDTH; x++) {
-            for (int y = 0; y < HEIGHT; y++) {
-                if ((x == 2 && y == 0) || (x == 5 && y == 0)) {
-                    assertEquals(new Bishop(PieceColor.BLACK, x, y), Board.board[x][y].getPiece());
-                } else if ((x == 2 && y == 7) || (x == 5 && y == 7)) {
-                    assertEquals(new Bishop(PieceColor.WHITE, x, y), Board.board[x][y].getPiece());
-                } else {
-                    assertNotEquals(new Bishop(PieceColor.BLACK, x, y), Board.board[x][y].getPiece());
-                    assertNotEquals(new Bishop(PieceColor.WHITE, x, y), Board.board[x][y].getPiece());
-                }
-            }
-        }
-    }
-
-    @Test
-    void createQueens() throws FileNotFoundException {
-        for (int x = 0; x < WIDTH; x++) {
-            for (int y = 0; y < HEIGHT; y++) {
-                if ((x == 3 && y == 0)) {
-                    assertEquals(new Queen(PieceColor.BLACK, x, y), Board.board[x][y].getPiece());
-                } else if ((x == 3 && y == 7)) {
-                    assertEquals(new Queen(PieceColor.WHITE, x, y), Board.board[x][y].getPiece());
-                } else {
-                    assertNotEquals(new Queen(PieceColor.BLACK, x, y), Board.board[x][y].getPiece());
-                    assertNotEquals(new Queen(PieceColor.WHITE, x, y), Board.board[x][y].getPiece());
-                }
-            }
-        }
-    }
-
-    @Test
-    void createKings() throws FileNotFoundException {
-        for (int x = 0; x < WIDTH; x++) {
-            for (int y = 0; y < HEIGHT; y++) {
-                if ((x == 4 && y == 0)) {
-                    assertEquals(new King(PieceColor.BLACK, x, y), Board.board[x][y].getPiece());
-                } else if ((x == 4 && y == 7)) {
-                    assertEquals(new King(PieceColor.WHITE, x, y), Board.board[x][y].getPiece());
-                } else {
-                    assertNotEquals(new King(PieceColor.BLACK, x, y), Board.board[x][y].getPiece());
-                    assertNotEquals(new King(PieceColor.WHITE, x, y), Board.board[x][y].getPiece());
-                }
-            }
-        }
-    }
-
-    @Test
     void toBoard() {
         assertEquals(0, Board.toBoard(0));
         assertEquals(1, Board.toBoard(50));
@@ -157,8 +61,11 @@ class BoardTest {
     }
 
     @Test
-    void getKing() throws FileNotFoundException {
-        assertEquals(new King(PieceColor.BLACK, 4, 0), Board.getKing(PieceColor.BLACK));
+    void getKing() {
+        King king = Board.getKing(PieceColor.BLACK);
+        assertEquals(PieceColor.BLACK, king.getColor());
+        assertEquals(400, king.getOldX());
+        assertEquals(0, king.getOldY());
     }
 
     @Test
@@ -170,5 +77,11 @@ class BoardTest {
 
     @Test
     void initializeColors() {
+        Board.initializeColors();
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                assertEquals(Board.board[x][y].getDefaultColor(), Board.board[x][y].getColor());
+            }
+        }
     }
 }

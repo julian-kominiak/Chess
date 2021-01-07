@@ -2,6 +2,7 @@ package com.juliankominiak.chess;
 
 import com.juliankominiak.chess.Pieces.Piece;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import static com.juliankominiak.chess.Board.*;
 
@@ -35,6 +36,18 @@ public class Tile extends Rectangle {
 
     public void changeColor(Color color) {
         setFill(color);
+    }
+
+    public Color getDefaultColor() {
+        return defaultColor;
+    }
+
+    public Color getColor() {
+        Paint paint = this.getFill();
+        if (paint instanceof Color) {
+            return (Color) paint;
+        }
+        return null;
     }
 
     public void returnToDefaultColor() {
